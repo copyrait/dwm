@@ -1,0 +1,148 @@
+﻿create table inventory(
+warehouse varchar(50),
+product varchar(50),
+model varchar(50),
+quantity int);
+
+insert into inventory values('San Francisco','iPhone','6s',50);
+insert into inventory values('San Francisco','iPhone','7',10);
+insert into inventory values('San Francisco','iPhone','X',200);
+insert into inventory values('San Francisco','Samsung','Galaxy S',200);
+insert into inventory values('San Francisco','Samsung','Note 8',100);
+insert into inventory values('San Jose','iPhone','6s',100);
+insert into inventory values('San Jose','iPhone','7',50);
+insert into inventory values('San Jose','iPhone','X',150);
+insert into inventory values('San Jose','Samsung','Galaxy S',200);
+insert into inventory values('San Jose','Samsung','Note 8',150);
+
+//Rollup with 1 column
+Select warehouse, sum(quantity) from inventory group by rollup (warehouse);
+
+//Rollup with multiple columns
+Select warehouse,product, sum(quantity) from inventory group by rollup (warehouse,product);
+
+//Drill down
+Select product,quantity from inventory order by product asc;
+
+//Slice
+
+Select * from inventory where quantity=50;
+
+//Dice
+
+Select * from inventory where quantity=50 and product=’iPhone’;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create table faculty(f_id number(10) primary key,
+ f_name varchar(20) not null,
+ dept varchar(20) not null);
+insert into faculty values(1,'abc','cs');
+insert into faculty values(2,'abc1','it');
+insert into faculty values(3,'abc2','extc');
+insert into faculty values(4,'abc3','instru');
+select * from faculty;
+create table course(c_id number(10) primary key,
+ c_name varchar(20) not null,
+ dept varchar(20) not null);
+
+insert into course values('1','ml','cs');
+insert into course values('2','data science','cs');
+insert into course values('3','iot','it');
+ 
+select * from course;
+create table student(s_id number(10) primary key,
+ s_name varchar(20) not null,
+ s_addr varchar(10) not null,
+ s_no varchar(20) not null);
+insert into student values('1','xy1','thane','9632587410');
+insert into student
+values('2','xyz2','naupada','7410258963');
+insert into student values('3','xyz3','airoli','7894561230');
+insert into student values('4','xy1','thane','9632587410');
+insert into student
+values('5','xyz2','naupada','7410258963');
+insert into student values('6','xyz3','airoli','7894561230');
+select * from student;
+create table courseGrade(s_id number(10),
+ c_id number(10) ,
+ f_id number(10) ,
+ courseGrade varchar(5) ,
+ foreign key(s_id) references student(s_id),
+ foreign key(c_id) references course(c_id),
+ foreign key(f_id) references faculty(f_id)
+ );
+insert into courseGrade values(1,1,1,'A');
+insert into courseGrade values(1,2,2,'A');
+insert into courseGrade values(3,2,3,'A');
+select * from courseGrade;
+select f_id,f_name,dept from faculty where
+dept='cs'; //drill up
+select count(f_id) from faculty where dept='cs'; //drill
+down
+create view student_view as select s_id,s_name,s_addr
+from student; // slice
+select * from student_view;
+select * from student where s_id=1; //dice
+
+
